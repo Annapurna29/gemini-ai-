@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SEO Optimization Tool</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700&display=swap" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            margin: 0;
+            padding: 0;
+            background: #0A0C1C;
+            color: #F3F4F6;
+        }
+        header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1rem 2rem;
+            background: linear-gradient(90deg, #1F2235, #0A0C1C);
+            box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.1);
+        }
+        .logo {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: #5ED3F3;
+        }
+        nav ul {
+            list-style: none;
+            display: flex;
+            gap: 1rem;
+        }
+        nav ul li a {
+            text-decoration: none;
+            color: inherit;
+        }
+        nav ul li a:hover {
+            color: #5ED3F3;
+        }
+        main {
+            padding: 2rem;
+            text-align: center;
+        }
+        textarea, input {
+            width: 100%;
+            max-width: 600px;
+            padding: 1rem;
+            margin: 1rem auto;
+            background: #1F2235;
+            color: #F3F4F6;
+            border: 1px solid #5ED3F3;
+            border-radius: 0.5rem;
+        }
+        button {
+            background: #5ED3F3;
+            color: #0A0C1C;
+            padding: 0.75rem 2rem;
+            font-size: 1rem;
+            font-weight: 600;
+            border: none;
+            border-radius: 0.5rem;
+            cursor: pointer;
+            margin-top: 1rem;
+        }
+        button:hover {
+            background: #4AB8D1;
+        }
+        .results {
+            margin-top: 2rem;
+            text-align: left;
+            max-width: 800px;
+            margin-left: auto;
+            margin-right: auto;
+            background: #1F2235;
+            padding: 1.5rem;
+            border-radius: 0.75rem;
+            box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.2);
+        }
+        .results h3 {
+            color: #5ED3F3;
+        }
+        footer {
+            text-align: center;
+            padding: 1.5rem 2rem;
+            background: #0A0C1C;
+            color: #A3A5AF;
+            font-size: 0.9rem;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="logo">SEO Optimizer</div>
+        <nav>
+            <ul>
+                <li><a href="dashboard.html">Home</a></li>
+                <li><a href="seo_optimizer.html">SEO Tool</a></li>
+                <li><a href="contact.html">Contact</a></li>
+            </ul>
+        </nav>
+    </header>
+    <main>
+        <h1>SEO Optimization Tool</h1>
+        <p>Enter a paragraph or website URL to analyze SEO performance and get actionable recommendations.</p>
+        <textarea id="seo-input" rows="5" placeholder="Enter content or URL here..."></textarea>
+        <button onclick="analyzeSEO()">Analyze</button>
+        <div id="seo-results" class="results" style="display: none;">
+            <h3>SEO Analysis Results</h3>
+            <div id="rating"></div>
+            <h4>Recommendations:</h4>
+            <ul id="recommendations"></ul>
+        </div>
+    </main>
+    <footer>
+        &copy; 2025 SEO Optimizer. All Rights Reserved.
+    </footer>
+
+    <script>
+        async function analyzeSEO() {
+            const input = document.getElementById('seo-input').value;
+            const resultsDiv = document.getElementById('seo-results');
+            const ratingDiv = document.getElementById('rating');
+            const recommendationsList = document.getElementById('recommendations');
+
+            // Clear previous results
+            ratingDiv.innerHTML = '';
+            recommendationsList.innerHTML = '';
+
+            if (!input.trim()) {
+                alert('Please enter content or a URL to analyze.');
+                return;
+            }
+
+            // Mock SEO analysis - replace with actual API calls
+            resultsDiv.style.display = 'block';
+
+            // Example analysis logic
+            const score = Math.floor(Math.random() * 51) + 50; // Random score 50-100
+            ratingDiv.innerHTML = `<p><strong>SEO Score:</strong> ${score}/100</p>`;
+
+            const recommendations = [
+                'Add more keywords relevant to your topic.',
+                'Improve meta descriptions and make them more engaging.',
+                'Ensure the content is mobile-friendly.',
+                'Add alt text to all images.',
+                'Increase word count to improve depth and detail.',
+            ];
+
+            // Add recommendations to the list
+            recommendations.forEach(rec => {
+                const li = document.createElement('li');
+                li.textContent = rec;
+                recommendationsList.appendChild(li);
+            });
+        }
+    </script>
+</body>
+</html>

@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Dashboard</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700&display=swap" rel="stylesheet">
+    <style>
+        /* Add your styles here */
+    </style>
+</head>
+<body>
+    <header>
+        <h1>Admin Dashboard</h1>
+    </header>
+    <div class="container">
+        <h2>Registered Users</h2>
+        <table>
+            <thead>
+                <tr>
+                    <th>Username</th>
+                    <th>Email</th>
+                    <th>Tools Used</th>
+                </tr>
+            </thead>
+            <tbody id="userList">
+                <!-- User data will be inserted here -->
+            </tbody>
+        </table>
+    </div>
+
+    <script>
+        // Fetch users from localStorage
+        const users = JSON.parse(localStorage.getItem('users')) || [];
+
+        const userList = document.getElementById('userList');
+
+        if (users.length === 0) {
+            userList.innerHTML = '<tr><td colspan="3">No users found</td></tr>';
+        } else {
+            users.forEach(user => {
+                const row = document.createElement('tr');
+                row.innerHTML = `
+                    <td>${user.username}</td>
+                    <td>${user.email}</td>
+                    <td>${user.tools.join(', ')}</td>
+                `;
+                userList.appendChild(row);
+            });
+        }
+    </script>
+</body>
+</html>

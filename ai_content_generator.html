@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI Content Generator</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            margin: 0;
+            padding: 0;
+            background: #0A0C1C;
+            color: #F3F4F6;
+        }
+        h1, h2 {  
+            text-align: center;
+            color: #5ED3F3;
+            margin: 1rem 0;
+        }
+        .container {
+            max-width: 800px;
+            margin: 2rem auto;
+            padding: 1.5rem;
+            background: #1F2235;
+            border-radius: 10px;
+            box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.3);
+        }
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+        label {
+            display: block;
+            font-size: 1rem;
+            font-weight: 500;
+            margin-bottom: 0.5rem;
+        }
+        input, select, textarea, button {
+            width: 100%;
+            padding: 0.75rem;
+            border-radius: 5px;
+            border: none;
+            font-size: 1rem;
+            margin-top: 0.5rem;
+            background: #2B2E49;
+            color: #F3F4F6;
+        }
+        button {
+            background: #5ED3F3;
+            font-weight: 600;
+            cursor: pointer;
+            transition: background 0.3s;
+        }
+        button:hover {
+            background: #4AB8D1;
+        }
+        .output {
+            margin-top: 2rem;
+            padding: 1.5rem;
+            background: #2B2E49;
+            border-radius: 10px;
+            box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.3);
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>AI Content Generator</h1>
+        <p style="text-align: center; margin-bottom: 2rem;">Input your preferences below, and let AI generate the perfect content for your needs.</p>
+
+        <!-- Input Form -->
+        <form id="contentForm">
+            <div class="form-group">
+                <label for="topic">Enter Content Type</label>
+                <input type="text" id="topic" placeholder="e.g., trending, games, inspirational, humor" required>
+            </div>
+
+            <div class="form-group">
+                <label for="length">Select Content Length</label>
+                <select id="length">
+                    <option value="short">Short (1-2 lines)</option>
+                    <option value="medium">Medium (3-5 lines)</option>
+                    <option value="long">Long (15+ lines)</option>
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label for="platform">Select Platform</label>
+                <select id="platform">
+                    <option value="instagram">Instagram</option>
+                    <option value="linkedin">LinkedIn</option>
+                    <option value="twitter">Twitter</option>
+                    <option value="facebook">Facebook</option>
+                </select>
+            </div>
+
+            <button type="submit">Generate Content</button>
+        </form>
+
+        <!-- Output Section -->
+        <div id="output" class="output" style="display: none;">
+            <h2>Generated Content</h2>
+            <p id="generatedContent"></p>
+        </div>
+    </div>
+
+    <script>
+        document.getElementById('contentForm').addEventListener('submit', function(event) {
+            event.preventDefault();
+
+            const topic = document.getElementById('topic').value.toLowerCase();
+            const length = document.getElementById('length').value;
+            const platform = document.getElementById('platform').value;
+
+            const contentLibrary = {
+                trending: {
+                    short: "This trend is taking over! 🌟 Don't miss out!",
+                    medium: "🔥 Trending now: amazing ideas that everyone is loving. Be a part of it!",
+                    long: "🚀 The latest buzz is here! Stay ahead by joining the conversation dominating social media. Learn how these trends inspire creativity, set the tone for cultural moments, and connect millions of people globally. Discover the hidden gems of trending topics, engage with the biggest movements, and see how they reshape our everyday lives. From viral videos to groundbreaking innovations, this is your chance to ride the wave and make an impact." 
+                },
+                games: {
+                    short: "Gamers, assemble! Drop your top game picks below! Level up your skills and explore new adventures.",
+                    medium: "🎮 Dive into epic gaming! From trending titles to retro classics, tag your squad and make memories together!",
+                    long: "🎮 Calling all gamers! Whether you're into action-packed battle royales or relaxing simulations, gaming connects us all. Share tips, tricks, and strategies for your favorite titles. Discover nostalgic classics and groundbreaking innovations redefining play. Join a growing community celebrating epic wins, hilarious fails, and unforgettable gaming adventures. From professional eSports tournaments to cozy couch co-op sessions, gaming creates stories we love to share." 
+                },
+                inspirational: {
+                    short: "Believe in yourself. 🌟",
+                    medium: "✨ Great things never come from comfort zones. Dare to dream, and make it happen!",
+                    long: "🌟 Every dream starts with a vision, and every success begins with a step forward. Life challenges us, but resilience and persistence pave the path to greatness. Find courage in your unique journey and strength in moments of doubt. Celebrate small victories and embrace the lessons hidden in failure. The world needs your light—shine brightly, inspire deeply, and build a legacy of positivity and hope." 
+                },
+                humor: {
+                    short: "Why did the chicken cross the road? To go viral! 😂",
+                    medium: "🤣 Need a laugh? Check out this hilarious take on life’s quirks. Your day just got better!",
+                    long: "😂 Laughter is the best medicine! Brighten your day with jokes, puns, and witty observations that hit just right. From relatable struggles to laugh-out-loud moments, humor connects us in unexpected ways. Explore the art of comedy that turns the mundane into the memorable. Share your favorite memes, create lighthearted moments, and remind everyone that smiles are meant to be shared." 
+                },
+                lifestyle: {
+                    short: "✨ Simple lifestyle tips for a better you. Discover your best self today!",
+                    medium: "✨ Live intentionally: balance, wellness, and joy. Explore tips to elevate your everyday routines and habits.",
+                    long: "✨ Your best life awaits! From crafting mindful morning rituals to embracing inspiring hobbies, every choice shapes the story of your days. Organize your spaces for peace and clarity. Prioritize self-care as an act of love for yourself. Create meals that nourish the soul and experiences that invigorate your spirit. Connect with like-minded individuals and build a lifestyle that truly aligns with your dreams." 
+                }
+            };
+
+            const platformModifications = {
+                instagram: (text) => `📸 ${text}`,
+                twitter: (text) => `${text} #Trending`,
+                linkedin: (text) => `🔗 ${text}`,
+                facebook: (text) => `👍 ${text}`
+            };
+
+            const topicContent = contentLibrary[topic];
+            if (!topicContent) {
+                document.getElementById('generatedContent').textContent = `Sorry, we don't have content for "${topic}". Try trending, games, inspirational, or humor.`;
+                document.getElementById('output').style.display = 'block';
+                return;
+            }
+
+            const generatedContent = platformModifications[platform](topicContent[length]);
+            document.getElementById('generatedContent').textContent = generatedContent;
+            document.getElementById('output').style.display = 'block';
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,72 @@
+{
+    "appMetadata": {
+      "name": "Gemini AI Customizable Editor",
+      "version": "1.0.0",
+      "description": "A responsive, AI-powered editor allowing users to easily tweak, format, and customize content in real-time.",
+      "author": "Gemini AI Team",
+      "license": "MIT"
+    },
+    "theme": {
+      "primaryColor": "#5ED3F3",
+      "secondaryColor": "#1F2235",
+      "backgroundColor": "#0A0C1C",
+      "fontFamily": "'Inter', sans-serif",
+      "textColor": "#F3F4F6",
+      "buttonHoverColor": "#4AB8D1"
+    },
+    "features": {
+      "editableContent": true,
+      "aiAssistance": {
+        "enabled": true,
+        "capabilities": [
+          "contentGeneration",
+          "textSummarization",
+          "contentExpansion",
+          "clearFormatting",
+          "textCorrection"
+        ],
+        "apiEndpoint": "https://api.openai.com/v1/completions",
+        "apiKey": "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"
+      },
+      "formattingTools": {
+        "bold": true,
+        "italic": true,
+        "underline": true,
+        "alignment": ["left", "center", "right", "justify"],
+        "listTypes": ["ordered", "unordered"],
+        "fontSizeAdjustment": true,
+        "colorPicker": true
+      },
+      "contentManagement": {
+        "import": true,
+        "export": true,
+        "clearContent": true,
+        "saveAsDraft": true
+      }
+    },
+    "responsiveDesign": {
+      "breakpoints": {
+        "mobile": "480px",
+        "tablet": "768px",
+        "desktop": "1024px"
+      },
+      "scaling": true
+    },
+    "permissions": {
+      "allowThirdPartyAPI": true,
+      "allowLocalStorage": true
+    },
+    "localization": {
+      "defaultLanguage": "en",
+      "supportedLanguages": ["en", "es", "fr", "de", "zh"]
+    },
+    "logging": {
+      "errorLogging": true,
+      "analytics": {
+        "enabled": true,
+        "tool": "Google Analytics",
+        "trackingId": "UA-XXXXXXXXX-X"
+      }
+    }
+  }
+  

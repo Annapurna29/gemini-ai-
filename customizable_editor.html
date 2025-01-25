@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI Customizable Editor</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            margin: 0;
+            padding: 0;
+            background: #0A0C1C;
+            color: #F3F4F6;
+        }
+        header {
+            padding: 1rem 2rem;
+            background: linear-gradient(90deg, #1F2235, #0A0C1C);
+            color: #5ED3F3;
+            text-align: center;
+            font-size: 1.5rem;
+            font-weight: bold;
+        }
+        .editor-container {
+            padding: 2rem;
+        }
+        .editor {
+            background: #1F2235;
+            color: #F3F4F6;
+            padding: 1.5rem;
+            border-radius: 0.75rem;
+            box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.2);
+            margin-bottom: 1rem;
+        }
+        .editor:focus {
+            outline: 2px solid #5ED3F3;
+        }
+        .toolbar {
+            display: flex;
+            gap: 1rem;
+            margin-bottom: 1rem;
+        }
+        .toolbar button {
+            background: #5ED3F3;
+            color: #0A0C1C;
+            padding: 0.5rem 1rem;
+            font-size: 1rem;
+            font-weight: 600;
+            border: none;
+            border-radius: 0.5rem;
+            cursor: pointer;
+        }
+        .toolbar button:hover {
+            background: #4AB8D1;
+        }
+        .ai-tools {
+            display: flex;
+            gap: 1rem;
+            flex-wrap: wrap;
+        }
+        .ai-tools button {
+            flex: 1 1 45%;
+            max-width: 200px;
+            background: #5ED3F3;
+            color: #0A0C1C;
+            padding: 0.5rem 1rem;
+            font-size: 1rem;
+            font-weight: 600;
+            border: none;
+            border-radius: 0.5rem;
+            cursor: pointer;
+            text-align: center;
+        }
+        .ai-tools button:hover {
+            background: #4AB8D1;
+        }
+        footer {
+            text-align: center;
+            padding: 1.5rem;
+            background: #0A0C1C;
+            color: #A3A5AF;
+            font-size: 0.9rem;
+        }
+    </style>
+</head>
+<body>
+    <header>Gemini AI - Customizable Editor</header>
+    <section class="editor-container">
+        <div class="toolbar">
+            <button onclick="formatText('bold')">Bold</button>
+            <button onclick="formatText('italic')">Italic</button>
+            <button onclick="formatText('underline')">Underline</button>
+            <button onclick="insertText()">Insert Text</button>
+        </div>
+        <div contenteditable="true" id="editor" class="editor">
+            Start editing your content here...
+        </div>
+        <h3>AI-Powered Tools</h3>
+        <div class="ai-tools">
+            <button onclick="generateContent()">Generate Content</button>
+            <button onclick="summarizeContent()">Summarize</button>
+            <button onclick="expandContent()">Expand</button>
+            <button onclick="clearContent()">Clear</button>
+        </div>
+    </section>
+    <footer>&copy; 2025 Gemini AI. All rights reserved.</footer>
+    <script>
+        function formatText(command) {
+            document.execCommand(command, false, null);
+        }
+
+        function insertText() {
+            const text = prompt("Enter text to insert:");
+            if (text) {
+                document.execCommand('insertText', false, text);
+            }
+        }
+
+        async function generateContent() {
+            const editor = document.getElementById('editor');
+            const response = await fetch('/api/generate', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({ topic: editor.textContent })
+            });
+
+            if (response.ok) {
+                const { content } = await response.json();
+                editor.textContent = content;
+            } else {
+                alert('Error generating content.');
+            }
+        }
+
+        async function summarizeContent() {
+            const editor = document.getElementById('editor');
+            const response = await fetch('/api/summarize', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({ text: editor.textContent })
+            });
+
+            if (response.ok) {
+                const { summary } = await response.json();
+                editor.textContent = summary;
+            } else {
+                alert('Error summarizing content.');
+            }
+        }
+
+        async function expandContent() {
+            const editor = document.getElementById('editor');
+            const response = await fetch('/api/expand', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({ text: editor.textContent })
+            });
+
+            if (response.ok) {
+                const { expanded } = await response.json();
+                editor.textContent = expanded;
+            } else {
+                alert('Error expanding content.');
+            }
+        }
+
+        function clearContent() {
+            const editor = document.getElementById('editor');
+            if (confirm("Are you sure you want to clear all content?")) {
+                editor.textContent = '';
+            }
+        }
+    </script>
+</body>
+</html>

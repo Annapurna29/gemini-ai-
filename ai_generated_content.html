@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI-Generated Content</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            margin: 0;
+            padding: 0;
+            background: #0A0C1C;
+            color: #F3F4F6;
+        }
+        h1, h2, h3 {
+            margin: 0;
+        }
+        a {
+            text-decoration: none;
+            color: inherit;
+        }
+        header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1rem 2rem;
+            background: linear-gradient(90deg, #1F2235, #0A0C1C);
+            box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.1);
+        }
+        .logo {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: #5ED3F3;
+        }
+        nav ul {
+            list-style: none;
+            display: flex;
+            gap: 1rem;
+        }
+        nav ul li {
+            font-size: 1rem;
+            font-weight: 500;
+        }
+        nav ul li a:hover {
+            color: #5ED3F3;
+        }
+        .container {
+            padding: 2rem;
+        }
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+        label {
+            display: block;
+            font-size: 1rem;
+            margin-bottom: 0.5rem;
+        }
+        input[type="text"] {
+            width: 100%;
+            padding: 0.75rem;
+            font-size: 1rem;
+            border: none;
+            border-radius: 0.5rem;
+            background: #1F2235;
+            color: #F3F4F6;
+        }
+        input[type="text"]:focus {
+            outline: 2px solid #5ED3F3;
+        }
+        .generate-button, .home-button {
+            padding: 0.75rem 2rem;
+            font-size: 1rem;
+            font-weight: 600;
+            border: none;
+            border-radius: 0.5rem;
+            cursor: pointer;
+            display: inline-block;
+            margin-right: 1rem;
+        }
+        .generate-button {
+            background: #5ED3F3;
+            color: #0A0C1C;
+        }
+        .generate-button:hover {
+            background: #4AB8D1;
+        }
+        .home-button {
+            background: #A3A5AF;
+            color: #0A0C1C;
+        }
+        .home-button:hover {
+            background: #8A8E9F;
+        }
+        .output {
+            margin-top: 2rem;
+            padding: 1.5rem;
+            background: #1F2235;
+            border-radius: 0.75rem;
+            box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+        }
+        .output h3 {
+            margin-bottom: 1rem;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="logo">Gemini AI</div>
+        <nav>
+            <ul>
+                <li><a href="dashboard.html">Home</a></li>
+            </ul>
+        </nav>
+    </header>
+    <div class="container">
+        <h1>AI-Generated Content</h1>
+        <p>Enter a keyword or topic to generate AI-powered content instantly.</p>
+        <form id="contentForm">
+            <div class="form-group">
+                <label for="keyword">Keyword or Topic</label>
+                <input type="text" id="keyword" name="keyword" placeholder="Enter a keyword or topic">
+            </div>
+            <button type="button" class="generate-button" id="generateButton">Generate</button>
+            <a href="dashboard.html" class="home-button">Home</a>
+        </form>
+        <div class="output" id="output" style="display: none;">
+            <h3>Generated Content</h3>
+            <p id="generatedContent"></p>
+        </div>
+    </div>
+    <script>
+        const contentData = {
+    trending: {
+           long: `🚀 The latest buzz is here! Stay ahead by joining the conversations dominating social media platforms today. These trends are more than fleeting moments; they inspire creativity, spark cultural shifts, and bring people together globally. Discover how influencers, creators, and individuals are using these trends to inspire, connect, and shape narratives. From viral challenges to breakthrough innovations in technology, these movements redefine what it means to stay relevant. Engage in discussions, create meaningful contributions, and take part in the wave that everyone is talking about. Whether it’s entertainment, advocacy, or lifestyle, this is your chance to make a difference while staying trendy!`
+    },
+    games: {
+         long: `🎮 Gamers, assemble! From high-octane action games to deeply immersive RPGs, gaming continues to unite players globally. Whether you're mastering strategies in competitive esports or unraveling mysteries in narrative-driven adventures, every game tells a story worth experiencing. Dive into upcoming releases, uncover hidden gems, and explore the innovations shaping the future of gaming. Share tips, swap strategies, and celebrate those hard-earned victories. Don't just play the game—be part of a growing community that celebrates creativity, connection, and fun.`
+    },
+    inspirational: {
+           long: `🌟 Every journey begins with a single step. Life challenges us in ways we can’t always foresee, but resilience and perseverance are the keys to unlocking our true potential. Embrace your unique story and find strength in the moments that test you the most. Celebrate every victory—big or small—and learn to see setbacks as lessons. You are capable of greatness beyond imagination. Dare to dream boldly, work passionately, and inspire others to do the same. The world needs your light, your vision, and your courage. Keep shining!`
+    },
+    humor: {
+    long: `😂 They say laughter is the best medicine—and we couldn’t agree more! Whether it’s a clever pun, a relatable meme, or a funny anecdote, humor has the power to brighten even the darkest days. Explore the lighter side of life, share moments that make you chuckle, and remind others that joy is always within reach. Let’s turn those mundane moments into memorable ones with a hearty laugh or two. Because life’s too short not to enjoy the funny side of it!`
+    },
+    lifestyle: {
+         long: `✨ Life is a beautiful journey, and every day offers a chance to live more intentionally. From building nourishing morning routines to cultivating habits that align with your values, crafting your ideal lifestyle begins with small, consistent actions. Whether it’s organizing your space for clarity or creating time for hobbies that fuel your soul, the way you live shapes the story of your life. Find joy in simplicity, cherish meaningful connections, and embrace self-care as a priority—not a luxury. Start living the life you’ve always dreamed of—one step at a time.`
+    },
+    technology: {
+           long: `🌐 Technology is at the heart of every breakthrough shaping our world. From AI-driven innovations to life-changing medical advancements, the future is unfolding faster than ever. Dive into the possibilities offered by cutting-edge gadgets, explore groundbreaking research, and see how technology redefines industries—from education and healthcare to entertainment and beyond. Discover how these innovations solve real-world problems, create opportunities, and connect us in ways once thought impossible. Stay curious, stay inspired, and be a part of the conversation driving humanity forward.`
+    },
+    health: {
+         long: `💚 Health is wealth, and taking care of your body and mind is the most important investment you can make. Start by making small, sustainable changes that build up over time—whether it’s a daily walk, a balanced diet, or mindful breathing exercises. Embrace the power of wellness by exploring tips to reduce stress, improve sleep, and increase energy. Remember, self-care is not selfish; it’s essential. Take control of your health journey today and inspire others to join you on the path to a happier, healthier life.`
+    },
+    education: {
+          long: `🎓 Education is the foundation of progress, and learning is a lifelong journey. Whether you're mastering a new skill, delving into advanced topics, or exploring different perspectives, education empowers us to grow and innovate. Find resources that resonate with your interests, connect with mentors who inspire, and join communities that encourage knowledge-sharing. With every lesson learned, you shape not just your own future but also the world around you. Keep exploring, keep questioning, and keep learning—it’s the ultimate key to success!`
+    }
+};
+
+
+        function typeText(element, text, speed = 50) {
+            element.textContent = "";
+            let i = 0;
+            const interval = setInterval(() => {
+                if (i < text.length) {
+                    element.textContent += text[i];
+                    i++;
+                } else {
+                    clearInterval(interval);
+                }
+            }, speed);
+        }
+
+        const generateButton = document.getElementById('generateButton');
+        const outputDiv = document.getElementById('output');
+        const generatedContent = document.getElementById('generatedContent');
+
+        generateButton.addEventListener('click', () => {
+            const keyword = document.getElementById('keyword').value.trim().toLowerCase();
+            if (!keyword) {
+                alert('Please enter a keyword or topic.');
+                return;
+            }
+
+            outputDiv.style.display = 'block';
+            generatedContent.textContent = 'Generating content... Please wait.';
+
+            const selectedCategory = contentData[keyword];
+            if (selectedCategory) {
+                const text = selectedCategory.long; // Adjust as needed (short, medium, long)
+                typeText(generatedContent, text, 50);
+            } else {
+                typeText(generatedContent, "No content available for this keyword. Please try a different topic.", 50);
+            }
+        });
+    </script>
+</body>
+</html>
